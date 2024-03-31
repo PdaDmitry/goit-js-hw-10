@@ -8,22 +8,79 @@ import 'izitoast/dist/css/iziToast.min.css';
 
 const input = document.getElementById('datetime-picker');
 input.classList.add('input');
-// input.textContent = new Date();
-// console.log(input.textContent);
 
 const button = document.querySelector('button');
 button.classList.add('btn-start');
 
-// const currentDate = new Date();
+function formatTime(CurDate) {
+  let date = CurDate;
+  let year = date.getFullYear();
+  //   let year = String(date.getFullYear()).padStart(2, '0');
+  let month = String(date.getMonth() + 1).padStart(2, '0');
+  let day = String(date.getDate()).padStart(2, '0');
+  let houre = String(date.getHours()).padStart(2, '0');
+  let min = String(date.getMinutes()).padStart(2, '0');
+  let sec = String(date.getSeconds()).padStart(2, '0');
+  let currentDate = `${year}-${month}-${day} ${houre}:${min}:${sec}`;
+  return currentDate;
+}
 
-// // Get year, month, day, hours, and minutes
-// const year = currentDate.getFullYear();
-// const month = String(currentDate.getMonth() + 1).padStart(2, '0'); // Months are zero-based
-// const day = String(currentDate.getDate()).padStart(2, '0');
-// const hours = String(currentDate.getHours()).padStart(2, '0');
-// const minutes = String(currentDate.getMinutes()).padStart(2, '0');
+input.value = formatTime(new Date());
 
-// // Format the date and time as needed
-// const formattedDateTime = `${year}-${month}-${day} ${hours}:${minutes}`;
-// input.textContent = formattedDateTime;
-// console.log(formattedDateTime);
+function formatMillisecondsToDate(milliseconds) {
+  // Create a new Date object with milliseconds
+  let date = new Date(milliseconds);
+
+  // Extract date and time components
+  let year = date.getFullYear();
+  let month = String(date.getMonth() + 1).padStart(2, '0'); // Adding 1 because months are zero-based
+  let day = String(date.getDate()).padStart(2, '0');
+  let hours = String(date.getHours()).padStart(2, '0');
+  let minutes = String(date.getMinutes()).padStart(2, '0');
+  let seconds = String(date.getSeconds()).padStart(2, '0');
+
+  // Construct the formatted date and time string
+  let formattedDate = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+
+  return formattedDate;
+}
+
+// Example usage:
+// let milliseconds = 123456789; // This could be the difference you calculated: Date.now() - date;
+// let formattedDateTime = formatMillisecondsToDate(milliseconds);
+// console.log('Formatted Date and Time:', formattedDateTime);
+
+// console.log('currentDate ', currentDate);
+// console.log(date.getTime());  disabled to add button
+
+button.addEventListener('click', startTimer);
+
+class Time {
+  constructor(clock) {
+    this.idInterval = null;
+    this.clock = clock;
+  }
+
+  start(str) {
+    let currentTime = Date.now();
+    this.idInterval = setInterval(() => {
+      let diff = Date.now() - currentTime;
+      console.log(formatTime(Date.now(diff)));
+      this.clock();
+    }, 1000);
+    setTimeout(() => {
+      clearInterval(this.idInterval);
+      console.log('Stop');
+    }, 6000);
+  }
+}
+
+function test() {
+  console.log('Hello');
+}
+
+let timer = new Time(test);
+
+function startTimer() {
+  timer.start();
+}
