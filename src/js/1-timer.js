@@ -12,46 +12,46 @@ input.classList.add('input');
 const button = document.querySelector('button');
 button.classList.add('btn-start');
 
-function formatTime(CurDate) {
-  let date = CurDate;
-  let year = date.getFullYear();
-  //   let year = String(date.getFullYear()).padStart(2, '0');
+function formatTime(currentValue) {
+  let date = currentValue;
+
+  let year = String(date.getFullYear()).padStart(2, '0');
   let month = String(date.getMonth() + 1).padStart(2, '0');
   let day = String(date.getDate()).padStart(2, '0');
-  let houre = String(date.getHours()).padStart(2, '0');
-  let min = String(date.getMinutes()).padStart(2, '0');
+  let houres = String(date.getHours()).padStart(2, '0');
+  let minutes = String(date.getMinutes()).padStart(2, '0');
   let sec = String(date.getSeconds()).padStart(2, '0');
-  let currentDate = `${year}-${month}-${day} ${houre}:${min}:${sec}`;
+  let currentDate = `${year}-${month}-${day} ${houres}:${minutes}:${sec}`;
+  // let arrDate = [year, month, day, houres, minutes, sec];
   return currentDate;
 }
 
+// const dateInput = formatTime(new Date());
+// const [year, month, day, houres, minutes, sec] = dateInput;
+// input.value = `${year}-${month}-${day} ${houres}:${minutes}:${sec}`;
 input.value = formatTime(new Date());
+// let futureDate = new Date(2024, 3, 1, 19, 0).getTime();
+// let currentTime = Date.now();
 
-function formatMillisecondsToDate(milliseconds) {
-  // Create a new Date object with milliseconds
-  let date = new Date(milliseconds);
+let diffDate; // = futureDate - currentTime;
 
-  // Extract date and time components
-  let year = date.getFullYear();
-  let month = String(date.getMonth() + 1).padStart(2, '0'); // Adding 1 because months are zero-based
-  let day = String(date.getDate()).padStart(2, '0');
-  let hours = String(date.getHours()).padStart(2, '0');
-  let minutes = String(date.getMinutes()).padStart(2, '0');
-  let seconds = String(date.getSeconds()).padStart(2, '0');
-
-  // Construct the formatted date and time string
-  let formattedDate = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
-
-  return formattedDate;
+function fromMsToDate() {
+  let days = Math.floor(diffDate / (1000 * 60 * 60 * 24))
+    .toString()
+    .padStart(2, '0');
+  let hours = Math.floor((diffDate % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
+    .toString()
+    .padStart(2, '0');
+  let min = Math.floor((diffDate % (1000 * 60 * 60)) / (1000 * 60))
+    .toString()
+    .padStart(2, '0');
+  let seconds = Math.floor((diffDate % (1000 * 60)) / 1000)
+    .toString()
+    .padStart(2, '0');
+  console.log(`${days} ${hours} ${min} ${seconds}`);
 }
 
-// Example usage:
-// let milliseconds = 123456789; // This could be the difference you calculated: Date.now() - date;
-// let formattedDateTime = formatMillisecondsToDate(milliseconds);
-// console.log('Formatted Date and Time:', formattedDateTime);
-
-// console.log('currentDate ', currentDate);
-// console.log(date.getTime());  disabled to add button
+// console.log(fromMsToDate(diffDate));
 
 button.addEventListener('click', startTimer);
 
@@ -61,11 +61,12 @@ class Time {
     this.clock = clock;
   }
 
-  start(str) {
+  start() {
     let currentTime = Date.now();
     this.idInterval = setInterval(() => {
-      let diff = Date.now() - currentTime;
-      console.log(formatTime(Date.now(diff)));
+      let futureDate = new Date(2024, 3, 1, 19, 0).getTime();
+      let currentTime = Date.now();
+      diffDate = futureDate - currentTime;
       this.clock();
     }, 1000);
     setTimeout(() => {
@@ -76,7 +77,8 @@ class Time {
 }
 
 function test() {
-  console.log('Hello');
+  // console.log(fromMsToDate(diffDate));
+  fromMsToDate(diffDate);
 }
 
 let timer = new Time(test);
