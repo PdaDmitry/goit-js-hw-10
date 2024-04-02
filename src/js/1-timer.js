@@ -11,6 +11,7 @@ input.classList.add('input');
 
 const button = document.querySelector('button');
 button.classList.add('btn-start');
+button.disabled = true;
 
 const daysElem = document.querySelector('[data-days]');
 const hoursElem = document.querySelector('[data-hours]');
@@ -26,17 +27,12 @@ function formatTime(currentValue) {
   let houres = String(date.getHours()).padStart(2, '0');
   let minutes = String(date.getMinutes()).padStart(2, '0');
   let sec = String(date.getSeconds()).padStart(2, '0');
-  let currentDate = `${year}-${month}-${day} ${houres}:${minutes}:${sec}`;
-  // let arrDate = [year, month, day, houres, minutes, sec];
-  return currentDate;
+  return `${year}-${month}-${day} ${houres}:${minutes}:${sec}`;
 }
 
-// const dateInput = formatTime(new Date());
-// const [year, month, day, houres, minutes, sec] = dateInput;
-// input.value = `${year}-${month}-${day} ${houres}:${minutes}:${sec}`;
 input.value = formatTime(new Date());
 
-let diffDate; // = futureDate - currentTime;
+let diffDate;
 let userSelectedDate;
 
 flatpickr(input, {
@@ -46,7 +42,35 @@ flatpickr(input, {
   minuteIncrement: 1,
   onClose(selectedDates) {
     userSelectedDate = selectedDates[0];
-    // console.log(selectedDates[0]);
+
+    let currentTime = Date.now();
+    diffDate = userSelectedDate - currentTime;
+    if (diffDate > 0) {
+      button.disabled = false;
+      button.classList.add('btn-normal');
+    } else {
+      button.disabled = true;
+      button.classList.remove('btn-normal');
+      iziToast.show({
+        message: 'Please choose a date in the future',
+        // class: 'iziToast-body',
+        messageSize: '16px',
+        messageWeight: '400',
+        // messageLineHeight: '1.5',
+        backgroundColor: '#ef4040',
+        // messageColor: '#fff',
+        position: 'topRight',
+
+        messageColor: 'white',
+        // position: 'topRight',
+        // // transitionIn: 'bounceInDown',
+        // // timeout: 3000,
+        // maxWidth: '302px',
+        // // zindex: 999,
+        // // close: false,
+        iconUrl: '../img/error.svg',
+      });
+    }
   },
 });
 
@@ -60,11 +84,8 @@ function convertMs(ms) {
   const hours = Math.floor((ms % day) / hour);
   const minutes = Math.floor(((ms % day) % hour) / minute);
   const seconds = Math.floor((((ms % day) % hour) % minute) / second);
-  // console.log({ days, hours, minutes, seconds });
   return { days, hours, minutes, seconds };
 }
-
-// console.log(convertMs(20000));
 
 button.addEventListener('click', startTimer);
 
@@ -80,40 +101,30 @@ class Time {
       diffDate = userSelectedDate - currentTime;
       if (diffDate > 0) {
         this.clock();
-        // setTimeout(() => {
-        //   clearInterval(this.idInterval);
-        //   // console.log('Stop');
-        // }, 50000);
       } else {
-        console.log('Choose date in the future!');
+        console.log('Choose a date in the future!');
         clearInterval(this.idInterval);
+        input.disabled = false;
       }
     }, 1000);
-    // setTimeout(() => {
-    //   clearInterval(this.idInterval);
-    //   console.log('Stop');
-    // }, 6000);
   }
 }
 
-function test() {
+function addLeadingZero() {
   let objDataDate = convertMs(diffDate);
   let { days, hours, minutes, seconds } = objDataDate;
-  days = days.toString().padStart(2, '0');
-  hours = hours.toString().padStart(2, '0');
-  minutes = minutes.toString().padStart(2, '0');
-  seconds = seconds.toString().padStart(2, '0');
 
-  daysElem.textContent = days;
-  hoursElem.textContent = hours;
-  minutesElem.textContent = minutes;
-  secondsElem.textContent = seconds;
+  daysElem.textContent = days.toString().padStart(2, '0');
+  hoursElem.textContent = hours.toString().padStart(2, '0');
+  minutesElem.textContent = minutes.toString().padStart(2, '0');
+  secondsElem.textContent = seconds.toString().padStart(2, '0');
 }
 
-let timer = new Time(test);
+const timer = new Time(addLeadingZero);
 
 function startTimer() {
   timer.start();
+  input.disabled = true;
+  button.disabled = true;
+  button.classList.remove('btn-normal');
 }
-
-// function formatTime() {}
