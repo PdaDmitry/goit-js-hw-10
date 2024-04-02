@@ -106,7 +106,6 @@ button {
 
 }
 
-/* was */
 .timer {
     display: flex;
     gap: 24px;
@@ -114,14 +113,12 @@ button {
 
 }
 
-/* was */
 .field {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-/* was */
 .value {
     font-weight: 400;
     font-size: 40px;
@@ -131,7 +128,6 @@ button {
 
 }
 
-/* was */
 .label {
     font-weight: 400;
     font-size: 16px;
@@ -141,11 +137,7 @@ button {
     text-transform: uppercase;
 }
 
-/* .iziToast-body {
-    border-bottom: 2px solid #ffbebe;
-    border-radius: 4px;
-    padding: 20px;
-    width: 302px;
-    height: 64px;
-    text-align: center;
-} */
+.iziToast-close {
+    filter: brightness(0) invert(1);
+    color: white;
+}

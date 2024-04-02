@@ -18,6 +18,8 @@ const hoursElem = document.querySelector('[data-hours]');
 const minutesElem = document.querySelector('[data-minutes]');
 const secondsElem = document.querySelector('[data-seconds]');
 
+button.addEventListener('click', startTimer);
+
 function formatTime(currentValue) {
   let date = currentValue;
 
@@ -53,21 +55,11 @@ flatpickr(input, {
       button.classList.remove('btn-normal');
       iziToast.show({
         message: 'Please choose a date in the future',
-        // class: 'iziToast-body',
         messageSize: '16px',
         messageWeight: '400',
-        // messageLineHeight: '1.5',
         backgroundColor: '#ef4040',
-        // messageColor: '#fff',
+        messageColor: '#fff',
         position: 'topRight',
-
-        messageColor: 'white',
-        // position: 'topRight',
-        // // transitionIn: 'bounceInDown',
-        // // timeout: 3000,
-        // maxWidth: '302px',
-        // // zindex: 999,
-        // // close: false,
         iconUrl: '../img/error.svg',
       });
     }
