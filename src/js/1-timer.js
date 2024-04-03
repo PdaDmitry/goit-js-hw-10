@@ -34,8 +34,9 @@ function formatTime(currentValue) {
 
 input.value = formatTime(new Date());
 
-let diffDate;
 let userSelectedDate;
+let currentTime;
+let diffDate;
 
 flatpickr(input, {
   enableTime: true,
@@ -45,7 +46,7 @@ flatpickr(input, {
   onClose(selectedDates) {
     userSelectedDate = selectedDates[0];
 
-    let currentTime = Date.now();
+    currentTime = Date.now();
     diffDate = userSelectedDate - currentTime;
     if (diffDate > 0) {
       button.disabled = false;
@@ -89,12 +90,11 @@ class Time {
 
   start() {
     this.idInterval = setInterval(() => {
-      let currentTime = Date.now();
+      currentTime = Date.now();
       diffDate = userSelectedDate - currentTime;
       if (diffDate > 0) {
         this.clock();
       } else {
-        console.log('Choose a date in the future!');
         clearInterval(this.idInterval);
         input.disabled = false;
       }

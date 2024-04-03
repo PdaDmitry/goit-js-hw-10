@@ -1,0 +1,123 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Montserrat",
+        sans-serif;
+}
+
+a {
+    text-decoration: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+ul {
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-left: 0;
+}
+
+img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+
+input,
+textarea,
+button {
+    font-family: inherit;
+    margin: 0;
+}
+
+/* =======================Standard Style Reset============================= */
+
+.form {
+    padding-top: 36px;
+    padding-left: 156px;
+}
+
+.form-label {
+    display: inline-flex;
+    flex-direction: column;
+    gap: 8px;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.5;
+    letter-spacing: 0.04em;
+    color: #2e2f42;
+    margin-bottom: 16px;
+}
+
+.form-label-input {
+    width: 360px;
+    height: 40px;
+    padding: 8px 16px;
+    border-radius: 4px;
+    border: 1px solid #808080;
+}
+
+.form-fieldset {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+
+    border-radius: 4px;
+    stroke-width: 1px;
+    stroke: #808080;
+    margin-bottom: 24px;
+    width: 360px;
+    height: 64px;
+}
+
+.form-fieldset-legend {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.5;
+    letter-spacing: 0.04em;
+    color: #2e2f42;
+}
+
+.form-fieldset-label {
+    display: flex;
+    align-items: center;
+
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.5;
+    color: #2e2f42;
+}
+
+.form-fieldset-label-input {
+    margin-right: 4px;
+}
+
+.form-btn {
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 1.5;
+    letter-spacing: 0.04em;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 16px;
+    width: 360px;
+    height: 40px;
+    background: #4e75ff;
+}
+
+.iziToast-close {
+    filter: brightness(0) invert(1);
+    color: white;
+}
